@@ -1,12 +1,12 @@
 using System.ComponentModel;
-
+ // tela cad produto
 public class NewProductForm : Form
 {
     async Task Insert()
     {
         string name = Name;
         decimal price = Price;
-        
+        // adicionar produtos
         // TODO
     }
 

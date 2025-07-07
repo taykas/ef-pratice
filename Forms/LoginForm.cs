@@ -1,3 +1,7 @@
+// tela de login
+
+using System.Data.Common;
+
 public class LoginForm : Form
 {
     async Task OnClick()
@@ -5,9 +9,11 @@ public class LoginForm : Form
         var username = tbUsername.Text;
         var password = tbPassword.Text;
 
-        // TODO
 
-        var userId = -1;
+    // TODO
+
+
+    var userId = -1;
         var productForm = new ProductForm(userId);
         productForm.Show();
         Hide();
@@ -23,24 +29,29 @@ public class LoginForm : Form
         Height = 300;
         FormClosing += (o, e) => Application.Exit();
 
-        tbUsername = new TextBox {
+        tbUsername = new TextBox
+        {
             Width = 200,
             PlaceholderText = "digite seu usuário..."
         };
-        tbPassword = new TextBox {
+        tbPassword = new TextBox
+        {
             Width = 200,
             UseSystemPasswordChar = true,
             PlaceholderText = "digite sua senha..."
         };
 
-        var btLogin = new Button {
-            Width = 80, Height = 40,
+        var btLogin = new Button
+        {
+            Width = 80,
+            Height = 40,
             Text = "Logar"
         };
 
         btLogin.Click += async (o, e) => await OnClick();
 
-        Controls.Add(new FlowLayoutPanel {
+        Controls.Add(new FlowLayoutPanel
+        {
             Dock = DockStyle.Fill,
             Padding = new Padding(40),
             Controls = {

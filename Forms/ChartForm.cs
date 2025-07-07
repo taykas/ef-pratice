@@ -1,3 +1,5 @@
+// Tela de produtos
+
 public class ChartForm : Form
 {
     async Task<List<Item>> LoadData()
@@ -18,7 +20,8 @@ public class ChartForm : Form
         List<Item> items = [];
         Load += async (o, e) => items = await LoadData();
 
-        var pb = new PictureBox {
+        var pb = new PictureBox
+        {
             Dock = DockStyle.Fill
         };
 

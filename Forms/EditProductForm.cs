@@ -1,16 +1,20 @@
 using System.ComponentModel;
+using System.Data.Common;
+// tela edição produtos
+
 
 public class EditProductForm : Form
 {
     async Task Save()
     {
         DialogResult = DialogResult.OK;
-        
+
         int id = ProductId;
         string name = Name;
         decimal price = Price;
 
-        // TODO
+        var db = await Connect.BdConnection();
+        await db.SaveChangesAsync();
 
         Close();
     }
@@ -48,13 +52,17 @@ public class EditProductForm : Form
         Width = 400;
         Height = 400;
         Text = "Editar Produto";
-        var btSave = new Button { 
+        var btSave = new Button
+        {
             Text = "Salvar",
-            Height = 40, Width = 80
+            Height = 40,
+            Width = 80
         };
-        var btExit = new Button { 
-            Text = "Cancelar", 
-            Height = 40, Width = 80 
+        var btExit = new Button
+        {
+            Text = "Cancelar",
+            Height = 40,
+            Width = 80
         };
 
         btExit.Click += (o, e) =>
@@ -64,8 +72,9 @@ public class EditProductForm : Form
         };
 
         btSave.Click += async (o, e) => await Save();
-        
-        var layout = new FlowLayoutPanel {
+
+        var layout = new FlowLayoutPanel
+        {
             Dock = DockStyle.Fill,
             Padding = new Padding(20),
             Controls = {

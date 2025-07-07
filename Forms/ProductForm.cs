@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 public class ProductForm : Form
 {
     async Task<bool> IsAdm(int userId)
@@ -11,15 +13,21 @@ public class ProductForm : Form
     {
         Clear();
 
-        // TODO
+        var db = await Connect.BdConnection();
+        var productItems = await db.ProductItem.ToListAsync();
 
-        Add(1, "bico", 100);
-        Add(2, "injetor", 300);
+        foreach (var item in productItems)
+        {
+            Add(db.)
+        }
     }
 
     async Task DeleteById(int id)
     {
-        // TODO
+        var db = await Connect.BdConnection();
+        var element =db.ProductItem.Find(id);
+        db.Remove(element);
+        await db.SaveChangesAsync();
     }
 
     int userId;

@@ -1,15 +1,27 @@
+using System.Data.Common;
+using System.Runtime.CompilerServices;
+
 public class SalesForm : Form
 {
     async Task Buy(int productId, int userId)
     {
-        // TODO
+        var Sale = new Sale
+        {
+            ProductId = productId,
+            UserDataId = userId,
+            BuyDate = DateTime.Now
+        };
+        var db = await Connect.BdConnection();
+        db.Add(Sale);
+        await db.SaveChangesAsync();
     }
 
     async Task LoadData(int productId)
     {
         Clear();
 
-        // TODO
+        // var db = await Connect.BdConnection();
+        // var Show =
 
         Add("bico", "trevis", "07/07/2025 10:55");
         Add("bico", "cristian", "07/07/2025 11:05");
@@ -25,40 +37,48 @@ public class SalesForm : Form
         Shown += async (o, e) =>
             await LoadData(productId);
 
-        table = new DataGridView {
+        table = new DataGridView
+        {
             Dock = DockStyle.Fill,
             AllowDrop = false,
             AllowUserToAddRows = false,
             AllowUserToDeleteRows = false,
             AllowUserToOrderColumns = false
         };
-        table.Columns.Add(new DataGridViewColumn {
+        table.Columns.Add(new DataGridViewColumn
+        {
             HeaderText = "Produto",
             AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         });
-        table.Columns.Add(new DataGridViewColumn {
+        table.Columns.Add(new DataGridViewColumn
+        {
             HeaderText = "Comprador",
             AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         });
-        table.Columns.Add(new DataGridViewColumn {
+        table.Columns.Add(new DataGridViewColumn
+        {
             HeaderText = "Data/Hora",
             AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         });
 
-        var btBuy = new ToolStripButton {
+        var btBuy = new ToolStripButton
+        {
             Text = "Comprar",
         };
 
-        var btExit = new ToolStripButton {
+        var btExit = new ToolStripButton
+        {
             Text = "Voltar",
         };
-        btExit.Click += (o, e) => {
+        btExit.Click += (o, e) =>
+        {
             Hide();
             var login = new ProductForm(userId);
             login.Show();
         };
 
-        var menuStrip = new MenuStrip {
+        var menuStrip = new MenuStrip
+        {
             Items = { btBuy, btExit }
         };
 
@@ -74,17 +94,20 @@ public class SalesForm : Form
 
     void Clear()
         => table.Rows.Clear();
-    
+
     void Add(string produto, string comprador, string data)
     {
         var row = new DataGridViewRow();
-        row.Cells.Add(new DataGridViewTextBoxCell {
+        row.Cells.Add(new DataGridViewTextBoxCell
+        {
             Value = produto
         });
-        row.Cells.Add(new DataGridViewTextBoxCell {
+        row.Cells.Add(new DataGridViewTextBoxCell
+        {
             Value = comprador
         });
-        row.Cells.Add(new DataGridViewTextBoxCell {
+        row.Cells.Add(new DataGridViewTextBoxCell
+        {
             Value = data
         });
         table.Rows.Add(row);
