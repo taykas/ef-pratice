@@ -1,6 +1,8 @@
 // tela de login
 
+using System.Collections.Specialized;
 using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 
 public class LoginForm : Form
 {
@@ -8,12 +10,20 @@ public class LoginForm : Form
     {
         var username = tbUsername.Text;
         var password = tbPassword.Text;
+        var db = await Connect.BdConnection();
 
+        var query =
+            from u in db.UserData
+            where u.Username == username && u.Pass == password
+            select u;
+        var user = await query.FirstOrDefaultAsync();
+        if (user is null)
+        {
+            MessageBox.Show("Usuário inválido.");
+            return;
+        }
 
-    // TODO
-
-
-    var userId = -1;
+        var userId = user.ID;
         var productForm = new ProductForm(userId);
         productForm.Show();
         Hide();
