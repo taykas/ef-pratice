@@ -18,7 +18,7 @@ public class ProductForm : Form
 
         foreach (var item in productItems)
         {
-            Add(db.)
+            Add(item.ID, item.Name, item.Price);
         }
     }
 

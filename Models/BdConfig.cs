@@ -9,7 +9,7 @@ public static class Connect
         var connBuilder = new SqlConnectionStringBuilder
         {
             DataSource = "localhost",
-            InitialCatalog = "ConexaoAulaHJ", // mudar nome bd
+            InitialCatalog = "EXERCISE", // mudar nome bd
             IntegratedSecurity = true,
             TrustServerCertificate = true
         };

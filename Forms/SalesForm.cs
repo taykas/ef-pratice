@@ -20,11 +20,16 @@ public class SalesForm : Form
     {
         Clear();
 
-        // var db = await Connect.BdConnection();
-        // var Show =
+        var db = await Connect.BdConnection();
+        var productItems = await db.ProductItem.ToListAsync();
 
-        Add("bico", "trevis", "07/07/2025 10:55");
-        Add("bico", "cristian", "07/07/2025 11:05");
+        foreach (var item in productItems)
+        {
+            Add(item.ID, item.Name, item.Price);
+        }
+
+        // Add("bico", "trevis", "07/07/2025 10:55");
+        // Add("bico", "cristian", "07/07/2025 11:05");
     }
 
     DataGridView table;
