@@ -9,7 +9,7 @@ public static class Connect
         var connBuilder = new SqlConnectionStringBuilder
         {
             DataSource = "localhost",
-            InitialCatalog = "EXERCISE", // mudar nome bd
+            InitialCatalog = "EXERCISE",
             IntegratedSecurity = true,
             TrustServerCertificate = true
         };
@@ -46,5 +46,12 @@ public class ExempleDbContext(DbContextOptions options) : DbContext(options)
             .WithMany(u => u.Sales)
             .HasForeignKey(c => c.UserDataId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        model.Entity<Sale>()
+            .HasOne(c => c.ProductItem)
+            .WithMany(u => u.Sales)
+            .HasForeignKey(c => c.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
+            
     }
 }

@@ -1,5 +1,7 @@
 using System.Data.Common;
 using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 public class SalesForm : Form
 {
@@ -21,15 +23,18 @@ public class SalesForm : Form
         Clear();
 
         var db = await Connect.BdConnection();
-        var productItems = await db.ProductItem.ToListAsync();
+        var saleItems = await db.Sale.ToListAsync();
+        var product = await db.ProductItem
+            .Include(p => p.Sales)
+            .ThenInclude(s => s.UserData)
+            .FirstOrDefaultAsync(p => p.ID == productId);
+        if (product is null)
+            return;
 
-        foreach (var item in productItems)
+        foreach (var sale in product.Sales)
         {
-            Add(item.ID, item.Name, item.Price);
+            Add(sale.ID, product.Name, sale.UserData.Username, sale.BuyDate.ToShortDateString());
         }
-
-        // Add("bico", "trevis", "07/07/2025 10:55");
-        // Add("bico", "cristian", "07/07/2025 11:05");
     }
 
     DataGridView table;
@@ -100,7 +105,7 @@ public class SalesForm : Form
     void Clear()
         => table.Rows.Clear();
 
-    void Add(string produto, string comprador, string data)
+    void Add(int iD, string produto, string comprador, string data)
     {
         var row = new DataGridViewRow();
         row.Cells.Add(new DataGridViewTextBoxCell

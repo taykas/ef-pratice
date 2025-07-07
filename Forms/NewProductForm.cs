@@ -6,8 +6,15 @@ public class NewProductForm : Form
     {
         string name = Name;
         decimal price = Price;
-        // adicionar produtos
-        // TODO
+        var newProduct = new ProductItem
+        {
+            Name = name,
+            Price = price
+        };
+        var db = await Connect.BdConnection();
+        db.Add(newProduct);
+        await db.SaveChangesAsync();
+        
     }
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
