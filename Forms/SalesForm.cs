@@ -10,7 +10,7 @@ public class SalesForm : Form
         var Sale = new Sale
         {
             ProductId = productId,
-            UserDataId = userId,
+            UserDataId = userId,   
             BuyDate = DateTime.Now
         };
         var db = await Connect.BdConnection();

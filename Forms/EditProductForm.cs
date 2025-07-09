@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 // tela edição produtos
 
 
@@ -7,6 +8,7 @@ public class EditProductForm : Form
 {
     async Task Save()
     {
+    
         DialogResult = DialogResult.OK;
 
         int id = ProductId;
@@ -14,6 +16,10 @@ public class EditProductForm : Form
         decimal price = Price;
 
         var db = await Connect.BdConnection();
+        var queryEdit = await db.ProductItem
+            .FirstOrDefaultAsync(u => u.ID == id);
+        queryEdit.Name = name;
+        queryEdit.Price = price;        
         await db.SaveChangesAsync();
 
         Close();

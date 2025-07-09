@@ -1,15 +1,23 @@
 // Tela de produtos
 
+using Microsoft.EntityFrameworkCore;
+
 public class ChartForm : Form
 {
     async Task<List<Item>> LoadData()
     {
-        // TODO
 
-        return [
-            new Item("bico", 2),
-            new Item("injetor", 6)
-        ];
+        var db = await Connect.BdConnection();
+    
+        var queryProductSales =
+            from s in db.Sale
+            join p in db.ProductItem
+            on s.ProductId equals p.ID
+            group s by p into g
+            select new { ProductItem = g.Key.Name, Sale = g.Count() };
+
+        var ProductSales = await queryProductSales.ToListAsync();
+        return [ ..ProductSales.Select(item => new Item(item.ProductItem, item.Sale)) ];
     }
 
     public ChartForm()

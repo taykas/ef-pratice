@@ -27,4 +27,9 @@ public class Sale
     public int UserDataId { get; set; }
     public UserData UserData { get; set; }
     public DateTime BuyDate { get; set; }
+
+    internal object COUNT(object value)
+    {
+        throw new NotImplementedException();
+    }
 }

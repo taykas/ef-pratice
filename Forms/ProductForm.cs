@@ -4,9 +4,15 @@ public class ProductForm : Form
 {
     async Task<bool> IsAdm(int userId)
     {
-        // TODO
+        var db = await Connect.BdConnection();
 
-        return true;
+        var query =
+            from u in db.UserData
+            where u.ID == userId
+            select u;
+
+        var user = await query.FirstOrDefaultAsync();
+        return user.IsAdm;
     }
 
     async Task LoadData()
